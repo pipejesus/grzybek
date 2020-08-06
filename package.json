@@ -1,0 +1,27 @@
+{
+  "name": "grzybek",
+  "version": "1.0.0",
+  "description": "Grzybek is a discord teller",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/pipejesus/grzybek.git"
+  },
+  "keywords": [
+    "grzybek",
+    "discord",
+    "bot"
+  ],
+  "author": "pipejesus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pipejesus/grzybek/issues"
+  },
+  "homepage": "https://github.com/pipejesus/grzybek#readme",
+  "dependencies": {
+    "discord.js": "^12.2.0"
+  }
+}
