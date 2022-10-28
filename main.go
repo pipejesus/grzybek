@@ -3,8 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"net/http"
+	"net/url"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 
 	"github.com/bwmarrin/discordgo"
@@ -17,7 +20,7 @@ var (
 
 func init() {
 
-	flag.StringVar(&Token, "t", "NzQxMDY3NzYzODQ5NjI1NjUx.Gy6bbC.oRPZhuBdl-SdfcYJmGmc9Pm944pifoSN2dN9D8", "Bot Token")
+	flag.StringVar(&Token, "t", "NzQxMDY3NzYzODQ5NjI1NjUx.GG8h-D.ZFbbVO0hIjBSG3Q-PbZStOG8vbWhmoyIi2D4cc", "Bot Token")
 	flag.Parse()
 }
 
@@ -59,16 +62,42 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	// Ignore all messages created by the bot itself
 	// This isn't required in this specific example but it's a good practice.
+
 	if m.Author.ID == s.State.User.ID {
 		return
 	}
-	// If the message is "ping" reply with "Pong!"
-	if m.Content == "ping" {
-		s.ChannelMessageSend(m.ChannelID, "Pong!")
+
+	if !strings.HasPrefix(m.Content, "say#") {
+		return
 	}
 
-	// If the message is "pong" reply with "Ping!"
-	if m.Content == "pong" {
-		s.ChannelMessageSend(m.ChannelID, "Ping!")
+	msg := strings.Split(strings.ReplaceAll(m.Content, "\n", " "), "say#")
+
+	fmt.Println(msg)
+	fmt.Println(len(msg))
+
+	if len(msg) != 2 {
+		return
 	}
+
+	bas := "http://srv12.mikr.us:30472/czo?gituser=greg-develtio&msg="
+	gif_msg := url.QueryEscape(msg[1])
+
+	response, err := http.Get(bas + gif_msg)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode != 200 {
+		return
+	}
+
+	_, err = s.ChannelFileSend(m.ChannelID, "grzybotsays.gif", response.Body)
+
+	if err != nil {
+		return
+	}
+	// s.ChannelMessageSend(m.ChannelID, bas+gif_msg)
+	s.ChannelMessageSend(m.ChannelID, "`"+bas+gif_msg+"`")
 }
