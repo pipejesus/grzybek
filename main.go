@@ -15,12 +15,15 @@ import (
 
 // Variables used for command line parameters
 var (
-	Token string
+	Token   string
+	GifHost string
+	OutUrl  string = "http://srv12.mikr.us:30472"
 )
 
 func init() {
 
 	flag.StringVar(&Token, "t", "NzQxMDY3NzYzODQ5NjI1NjUx.GG8h-D.ZFbbVO0hIjBSG3Q-PbZStOG8vbWhmoyIi2D4cc", "Bot Token")
+	flag.StringVar(&GifHost, "g", "localhost:30472", "The URL of the GIF app")
 	flag.Parse()
 }
 
@@ -80,7 +83,8 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
-	bas := "http://srv12.mikr.us:30472/czo?gituser=greg-develtio&msg="
+	bas := GifHost + "/czo?gituser=greg-develtio&msg="
+	bas_out := OutUrl + "/czo?gituser=greg-develtio&msg="
 	gif_msg := url.QueryEscape(msg[1])
 
 	response, err := http.Get(bas + gif_msg)
@@ -99,5 +103,5 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 	// s.ChannelMessageSend(m.ChannelID, bas+gif_msg)
-	s.ChannelMessageSend(m.ChannelID, "`"+bas+gif_msg+"`")
+	s.ChannelMessageSend(m.ChannelID, "`"+bas_out+gif_msg+"`")
 }
