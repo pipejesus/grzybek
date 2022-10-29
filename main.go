@@ -23,7 +23,7 @@ var (
 func init() {
 
 	flag.StringVar(&Token, "t", "NzQxMDY3NzYzODQ5NjI1NjUx.GG8h-D.ZFbbVO0hIjBSG3Q-PbZStOG8vbWhmoyIi2D4cc", "Bot Token")
-	flag.StringVar(&GifHost, "g", "localhost:30472", "The URL of the GIF app")
+	flag.StringVar(&GifHost, "g", "http://localhost:30472", "The URL of the GIF app")
 	flag.Parse()
 }
 
