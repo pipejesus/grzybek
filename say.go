@@ -42,6 +42,11 @@ func sayCommand(s *discordgo.Session, i *discordgo.InteractionCreate) {
 		},
 	})
 
+	if len(gitUserName) < 1 || len(message) < 1 {
+		fmt.Println("Empty git user name or message??")
+		return
+	}
+
 	sendGifToChannel(s, i, gitUserName, message)
 }
 
@@ -58,6 +63,7 @@ func sendGifToChannel(s *discordgo.Session, i *discordgo.InteractionCreate, gitH
 
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 
 	defer response.Body.Close()
