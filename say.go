@@ -16,7 +16,14 @@ import (
 // and responds with an interaction message
 // and a GIF file send
 func sayCommand(s *discordgo.Session, i *discordgo.InteractionCreate) {
-	options := i.ApplicationCommandData().Options
+
+	data := i.ApplicationCommandData()
+
+	if data.Name != "say" {
+		return
+	}
+
+	options := data.Options
 
 	optionMap := make(map[string]*discordgo.ApplicationCommandInteractionDataOption, len(options))
 
