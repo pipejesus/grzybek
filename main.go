@@ -41,6 +41,20 @@ func main() {
 		{
 			Name:        "saily",
 			Description: "Creates the saily game",
+			Options: []*discordgo.ApplicationCommandOption{
+				{
+					Type:        discordgo.ApplicationCommandOptionInteger,
+					Name:        "x",
+					Description: "X",
+					Required:    false,
+				},
+				{
+					Type:        discordgo.ApplicationCommandOptionInteger,
+					Name:        "y",
+					Description: "Y",
+					Required:    false,
+				},
+			},
 		},
 		{
 			Name:        "say",
